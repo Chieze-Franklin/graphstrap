@@ -17,6 +17,7 @@
     "lib",
     "test",
     "templates",
-    "resolvers"
+    "generated",
+    "models"
   ]
 }

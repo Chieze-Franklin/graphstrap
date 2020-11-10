@@ -1,5 +1,5 @@
 {
-  "name": "graphql-tsgen",
+  "name": "graphql-bootstrap",
   "version": "0.0.1",
   "description": "CLI tool to convert TypeScript types to TypeScript GraphQL resolvers",
   "main": "./lib/index.js",
@@ -8,7 +8,7 @@
     "clean:all": "rm -rf ./node_modules ./package-lock.json ./lib ./docs",
     "clean:some": "rm -rf ./lib ./docs",
     "docs": "typedoc --out docs ./src",
-    "global": "npm i -g && graphql-tsgen",
+    "global": "npm i -g && graphql-bootstrap",
     "lint": "tslint -p . --fix",
     "publish-package": "npm run build && npm publish",
     "refresh": "npm run clean:all && npm install",
@@ -18,18 +18,18 @@
     "tscov:d": "tscov --details"
   },
   "bin": {
-    "graphql-tsgen": "./bin/graphql-tsgen"
+    "graphql-bootstrap": "./bin/graphql-bootstrap"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Chieze-Franklin/graphql-tsgen.git"
+    "url": "git+https://github.com/Chieze-Franklin/graphql-bootstrap.git"
   },
   "author": "Franklin Chieze",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Chieze-Franklin/graphql-tsgen/issues"
+    "url": "https://github.com/Chieze-Franklin/graphql-bootstrap/issues"
   },
-  "homepage": "https://github.com/Chieze-Franklin/graphql-tsgen#readme",
+  "homepage": "https://github.com/Chieze-Franklin/graphql-bootstrap#readme",
   "dependencies": {
     "doctrine": "^3.0.0",
     "figlet": "^1.5.0",
