@@ -1,0 +1,66 @@
+{
+  "name": "graphql-tsgen",
+  "version": "0.0.1",
+  "description": "CLI tool to convert TypeScript types to TypeScript GraphQL resolvers",
+  "main": "./lib/index.js",
+  "scripts": {
+    "build": "npm run clean:some && tsc -p .",
+    "clean:all": "rm -rf ./node_modules ./package-lock.json ./lib ./docs",
+    "clean:some": "rm -rf ./lib ./docs",
+    "docs": "typedoc --out docs ./src",
+    "global": "npm i -g && graphql-tsgen",
+    "lint": "tslint -p . --fix",
+    "publish-package": "npm run build && npm publish",
+    "refresh": "npm run clean:all && npm install",
+    "start": "npm run build && npm run global",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tscov": "tscov --min-coverage 90",
+    "tscov:d": "tscov --details"
+  },
+  "bin": {
+    "graphql-tsgen": "./bin/graphql-tsgen"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chieze-Franklin/graphql-tsgen.git"
+  },
+  "author": "Franklin Chieze",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Chieze-Franklin/graphql-tsgen/issues"
+  },
+  "homepage": "https://github.com/Chieze-Franklin/graphql-tsgen#readme",
+  "dependencies": {
+    "doctrine": "^3.0.0",
+    "figlet": "^1.5.0",
+    "fs-extra": "^9.0.1",
+    "glob": "^7.1.6",
+    "inquirer": "^7.3.3",
+    "kleur": "^4.1.3",
+    "lodash": "^4.17.20",
+    "tslib": "^2.0.3"
+  },
+  "devDependencies": {
+    "@liftr/tscov": "^2.0.0",
+    "@types/chai": "^4.2.14",
+    "@types/figlet": "^1.2.1",
+    "@types/fs-extra": "^9.0.2",
+    "@types/glob": "^7.1.3",
+    "@types/inquirer": "^7.3.1",
+    "@types/lodash": "^4.14.164",
+    "@types/mocha": "^8.0.3",
+    "@types/node": "^14.14.6",
+    "@types/sinon": "^9.0.8",
+    "@types/sinon-chai": "^3.2.5",
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
+    "mocha-junit-reporter": "^2.0.0",
+    "nyc": "^15.1.0",
+    "sinon": "^9.2.1",
+    "sinon-chai": "^3.5.0",
+    "ts-node": "^9.0.0",
+    "tslint": "^6.1.3",
+    "typedoc": "^0.19.2",
+    "typescript": "^4.0.5"
+  }
+}
