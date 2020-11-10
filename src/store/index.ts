@@ -1,1 +1,3 @@
-export const store: { [key: string]: any } = {};
+import { Store } from '../types';
+
+export const store: Store = {};

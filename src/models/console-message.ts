@@ -1,5 +1,5 @@
 export enum ConsoleMessage {
-    TITLE = 'Ts2Resolvers',
+    TITLE = 'graphql-bootstrap',
     BANNER = 'Generate TypeScript GraphQL resolvers from TypeScript declarations',
     CREATE = 'CREATE: ',
     ERROR = 'ERROR: ',
