@@ -59,14 +59,14 @@ export async function graphqlBootstrap(): Promise<any> {
     let createRootResolvers = false;
 
     if (configFile?.config?.resolvers?.queries) {
-        if (configFile?.config?.resolvers?.queries?.templates?.object &&
-            configFile?.config?.resolvers?.queries?.templates?.objects) {
+        if (configFile?.config?.resolvers?.queries?.templates?.model &&
+            configFile?.config?.resolvers?.queries?.templates?.models) {
 
             createRootResolvers = true;
             store.templates = { ...configFile.config.resolvers.queries.templates };
             await queriesActions();
         } else {
-            showError(`Cannot find config.resolvers.queries.templates.object (or .objects) in ${configFileName}`);
+            showError(`Cannot find config.resolvers.queries.templates.model (or .models) in ${configFileName}`);
         }
     } else {
         showError(`Cannot find config.resolvers.queries in ${configFileName}`);

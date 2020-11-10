@@ -13,8 +13,8 @@ export interface Config {
             }
             queries: {
                 templates: {
-                    object: string;
-                    objects: string;
+                    model: string;
+                    models: string;
                 }
             }
         }
@@ -33,7 +33,7 @@ export interface Store {
         import?: string;
     }
     templates?: {
-        object?: string;
-        objects?: string;
+        model?: string;
+        models?: string;
     }
 }
