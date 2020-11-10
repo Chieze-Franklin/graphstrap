@@ -1,7 +1,7 @@
-import { tsToResolvers } from './ts2resolvers';
+import { graphqlBootstrap } from './graphql-bootstrap';
 
 export function index(): Promise<any> {
-  return tsToResolvers();
+  return graphqlBootstrap();
 };
 
 index();

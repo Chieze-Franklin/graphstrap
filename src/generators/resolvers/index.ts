@@ -2,12 +2,12 @@ import * as _ from 'lodash';
 import * as typescript from 'typescript';
 import * as path from 'path';
 
-import * as types from './types';
-import * as util from './util';
+import * as types from '../types';
+import * as util from '../util';
 import Collector from './collector';
 import Emitter from './emitter';
 
-export * from './types';
+export * from '../types';
 export { Emitter };
 
 export function load(schemaRootPath: string, rootNodeNames: string[]): types.TypeMap {
@@ -17,7 +17,7 @@ export function load(schemaRootPath: string, rootNodeNames: string[]): types.Typ
 
   const interfaces: { [key: string]: typescript.InterfaceDeclaration } = {};
   typescript.forEachChild((schemaRoot as typescript.Node), (node) => {
-    if (!isNodeExported(node)) return;
+    if (!util.isNodeExported(node)) return;
     if (node.kind === typescript.SyntaxKind.InterfaceDeclaration) {
       const interfaceNode = <typescript.InterfaceDeclaration>node;
       interfaces[interfaceNode.name.text] = interfaceNode;
@@ -52,27 +52,6 @@ export function load(schemaRootPath: string, rootNodeNames: string[]): types.Typ
   return collector.types;
 }
 
-export function foundSchema(schemaRootPath: string): boolean {
-  schemaRootPath = path.resolve(schemaRootPath);
-  const program = typescript.createProgram([schemaRootPath], {});
-  const schemaRoot = program.getSourceFile(schemaRootPath);
-  let foundSchema = false;
-
-  typescript.forEachChild((schemaRoot as typescript.Node), (node) => {
-    if (foundSchema) return;
-    if (!isNodeExported(node)) return;
-    if (node.kind === typescript.SyntaxKind.InterfaceDeclaration) {
-      const interfaceNode = <typescript.InterfaceDeclaration>node;
-      const documentation = util.documentationForNode(interfaceNode, (schemaRoot as typescript.SourceFile).text);
-      if (documentation && _.find(documentation.tags, {title: 'graphql', description: 'schema'})) {
-        foundSchema = true;
-      }
-    }
-  });
-
-  return foundSchema;
-}
-
 export function emit(
   schemaRootPath:string,
   rootNodeNames:string[],
@@ -81,8 +60,4 @@ export function emit(
   const loadedTypes = load(schemaRootPath, rootNodeNames);
   const emitter = new Emitter(loadedTypes);
   emitter.emitAll(stream);
-}
-
-function isNodeExported(node:typescript.Node):boolean {
-  return !!node.modifiers && node.modifiers.some(m => m.kind === typescript.SyntaxKind.ExportKeyword);
 }

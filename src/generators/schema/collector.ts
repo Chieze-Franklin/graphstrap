@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import typescript from 'typescript';
 
-import * as types from './types';
-import * as util from './util';
+import * as types from '../types';
+import * as util from '../util';
 
 const SyntaxKind = typescript.SyntaxKind;
 const TypeFlags = typescript.TypeFlags;
@@ -13,44 +13,28 @@ const TypeFlags = typescript.TypeFlags;
  */
 export default class Collector {
   types: types.TypeMap = {
-    graphql: {type: 'import', imports: ['GraphQLResolveInfo']},
-    ID: {type: 'alias', target: {type: 'string'}},
-    Long: {type: 'alias', target: {type: 'number'}},
-    '__Resolver<R, A, T>': {
-      type: 'alias',
-      target: {
-        type: 'method',
-        name: '',
-        parameters: {
-          root: {
-            type: 'reference',
-            target: 'R'
-          },
-          args: {
-            type: 'reference',
-            target: 'A'
-          },
-          ctx: {
-            type: 'reference',
-            target: '__ContextType'
-          },
-          info: {
-            type: 'reference',
-            target: 'GraphQLResolveInfo'
-          }
-        },
-        returns: {
-          type: 'union',
-          types: [{
-            type: 'reference',
-            target: 'T'
-          }, {
-            type: 'reference',
-            target: 'Promise<T>'
-          }]
-        }
-      }
-    }
+    Date: {type: 'alias', target: {type: 'string'}},
+    DateTime: {type: 'alias', target: {type: 'string'}},
+    Error: {
+      type: 'interface',
+      concrete: true,
+      inherits: [],
+      members: [{
+        type: 'property',
+        name: 'name',
+        signature: {type: 'string'}
+      }, {
+        type: 'property',
+        name: 'message',
+        signature: {type: 'string'}
+      }, {
+        type: 'property',
+        name: 'stack',
+        optional: true,
+        signature: {type: 'string'}
+      }]
+    },
+    Long: {type: 'alias', target: {type: 'string'}},
   };
   private checker: typescript.TypeChecker;
   private nodeMap: Map<typescript.Node, types.Node> = new Map();

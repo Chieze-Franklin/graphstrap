@@ -1,24 +1,24 @@
-import * as glob from 'glob';
 import fs from 'fs-extra';
 import path from 'path';
-import { showReading, showGenerated } from '../utils/logger.util';
+import { showInfo, showGenerated } from '../utils/logger.util';
 import { store } from '../store';
-import * as compiler from '../compiler';
-import Emitter from '../compiler/emitter';
+import * as generator from '../generators/resolvers';
+import Emitter from '../generators/resolvers/emitter';
+import * as util from '../generators/util';
 
 export async function resolversActions(): Promise<any>  {
-    if (store.inputFiles && store.outputResolversDir) {
-        const files = glob.sync(store.inputFiles);
-        files.forEach(async file => {
-            showReading(file);
+    if (store.in && store.resolversRootDir) {
+        showInfo('Generating resolvers...');
 
-            if (compiler.foundSchema(file)) {
-                const fileName = path.basename(file, '.ts');
-                const outputFilePath = path.resolve(path.join(store.outputResolversDir, `${fileName}.resolvers.ts`));
+        const files = store.inFiles || [];
+        const promises = files.map(async file => {
+            if (util.foundSchema(file)) {
+                // const fileName = path.basename(file, '.ts');
+                const resolversPath = path.resolve(path.join(store.resolversRootDir!, `resolvers.ts`));
 
-                await fs.createFile(outputFilePath)
-                const writeStream = fs.createWriteStream(outputFilePath);
-                let loadedTypes = compiler.load(file, [])
+                await fs.createFile(resolversPath)
+                const writeStream = fs.createWriteStream(resolversPath);
+                let loadedTypes = generator.load(file, [])
                 loadedTypes = {
                     ...(
                         (store.context && store.context.import && store.context.from) &&
@@ -44,10 +44,13 @@ export async function resolversActions(): Promise<any>  {
                 }
                 const emitter = new Emitter(loadedTypes);
                 emitter.emitAll(writeStream);
+                store.concreteInterfaceNames = emitter.concreteInterfaceNames;
 
-                showGenerated(outputFilePath);
+                showGenerated(resolversPath);
             }
         });
+
+        await Promise.all(promises);
 
         return;
     }

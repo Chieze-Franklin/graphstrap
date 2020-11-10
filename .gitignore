@@ -103,4 +103,4 @@ dist
 # test files
 /models/
 /generated/
-ts2resolvers.config.json
+graphql-bootstrap.json
