@@ -14,13 +14,13 @@ export default class Emitter {
     queryResolvers: Types.InterfaceNode = {
         type: 'interface',
         members: [],
-        inherits: ['Query'],
+        inherits: [],
         concrete: false
     };
     mutationResolvers: Types.InterfaceNode = {
         type: 'interface',
         members: [],
-        inherits: ['Mutation'],
+        inherits: [],
         concrete: false
     };
     allResolvers: Types.InterfaceNode = {
@@ -313,6 +313,7 @@ export default class Emitter {
                 type: 'property',
                 name: '_placeholder',
                 signature: { type: 'boolean' },
+                optional: true,
             });
         }
     
@@ -425,6 +426,7 @@ export default class Emitter {
                 type: 'property',
                 name: '_placeholder',
                 signature: { type: 'boolean' },
+                optional: true,
             });
         }
     
@@ -472,6 +474,7 @@ export default class Emitter {
                 type: 'property',
                 name: '_placeholder',
                 signature: { type: 'boolean' },
+                optional: true,
             });
         }
     
@@ -552,6 +555,7 @@ export default class Emitter {
                 type: 'property',
                 name: '_placeholder',
                 signature: { type: 'boolean' },
+                optional: true,
             });
         }
     
@@ -638,6 +642,7 @@ export default class Emitter {
                 type: 'property',
                 name: '_placeholder',
                 signature: { type: 'boolean' },
+                optional: true,
             });
         }
     

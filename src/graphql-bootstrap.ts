@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { queriesActions, resolversActions, rootActions, schemaActions } from './actions';
+import { mutationsActions, queriesActions, resolversActions, rootActions, schemaActions } from './actions';
 import { showTitleAndBanner, showError } from './utils/logger.util';
 import { store } from './store';
 import { Config } from './types';
@@ -57,6 +57,7 @@ export async function graphqlBootstrap(): Promise<any> {
     }
 
     let createRootResolvers = false;
+    store.templates = {};
 
     if (configFile?.config?.resolvers?.queries) {
         if (configFile?.config?.resolvers?.queries?.templates?.model &&
@@ -72,13 +73,21 @@ export async function graphqlBootstrap(): Promise<any> {
         showError(`Cannot find config.resolvers.queries in ${configFileName}`);
     }
 
+    if (configFile?.config?.resolvers?.mutations) {
+        if (configFile?.config?.resolvers?.mutations?.templates?.createModel &&
+            configFile?.config?.resolvers?.mutations?.templates?.deleteModel) {
+
+            createRootResolvers = true;
+            store.templates = { ...store.templates, ...configFile.config.resolvers.mutations.templates };
+            await mutationsActions();
+        } else {
+            showError(`Cannot find config.resolvers.mutations.templates.createModel (or .deleteModel) in ${configFileName}`);
+        }
+    } else {
+        showError(`Cannot find config.resolvers.mutations in ${configFileName}`);
+    }
+
     if (createRootResolvers) {
         await rootActions();
     }
-
-    // if ((configFile.config || {}).context) {
-    //     store.context = configFile.config.context;
-    // } else {
-    //     showError(`Cannot find config.context in ${configFileName}\nContext will be set to type '{[key: string]: any}'.`);
-    // }
 }

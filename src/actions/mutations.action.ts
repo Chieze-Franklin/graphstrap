@@ -5,38 +5,38 @@ import { store } from '../store';
 import Emitter from '../generators/real-resolvers/emitter';
 import SilverB from 'silverb';
 
-export async function queriesActions(): Promise<any>  {
+export async function mutationsActions(): Promise<any>  {
     if (store.resolversRootDir && store.concreteInterfaceNames) {
-        showInfo('Generating query resolvers...');
+        showInfo('Generating mutation resolvers...');
 
         const interfaces = store.concreteInterfaceNames;
-        const rootQueryPath = path.resolve(path.join(store.resolversRootDir, `queries/index.ts`));
-        const rootQueryCodeGenPath = path.resolve(path.join(store.resolversRootDir, `queries/queries.ts`));
+        const rootMutationPath = path.resolve(path.join(store.resolversRootDir, `mutations/index.ts`));
+        const rootMutationCodeGenPath = path.resolve(path.join(store.resolversRootDir, `mutations/mutations.ts`));
         const emitter = new Emitter();
 
-        if (!fs.existsSync(rootQueryPath)) {
-            await fs.createFile(rootQueryPath)
-            const rootQueryWriteStream = fs.createWriteStream(rootQueryPath);
-            emitter.emitRootQuery(rootQueryWriteStream, interfaces);
-            showGenerated(rootQueryPath);
+        if (!fs.existsSync(rootMutationPath)) {
+            await fs.createFile(rootMutationPath)
+            const rootMutationWriteStream = fs.createWriteStream(rootMutationPath);
+            emitter.emitRootMutation(rootMutationWriteStream, interfaces);
+            showGenerated(rootMutationPath);
         }
 
-        await fs.createFile(rootQueryCodeGenPath)
-        const rootQueryCodeGenWriteStream = fs.createWriteStream(rootQueryCodeGenPath);
-        emitter.emitRootQueryCodeGen(rootQueryCodeGenWriteStream, interfaces);
-        showGenerated(rootQueryCodeGenPath);
+        await fs.createFile(rootMutationCodeGenPath)
+        const rootMutationCodeGenWriteStream = fs.createWriteStream(rootMutationCodeGenPath);
+        emitter.emitRootMutationCodeGen(rootMutationCodeGenWriteStream, interfaces);
+        showGenerated(rootMutationCodeGenPath);
 
         interfaces.forEach(async _interface => {
             const resolverPath =
-                path.resolve(path.join(store.resolversRootDir!, `queries/${_interface.toLowerCase()}/${_interface}QueryResolvers.ts`));
+                path.resolve(path.join(store.resolversRootDir!, `mutations/${_interface.toLowerCase()}/${_interface}MutationResolvers.ts`));
             const resolverCodeGenPath =
-                path.resolve(path.join(store.resolversRootDir!, `queries/${_interface.toLowerCase()}/${_interface}QueryResolversCodeGen.ts`));
+                path.resolve(path.join(store.resolversRootDir!, `mutations/${_interface.toLowerCase()}/${_interface}MutationResolversCodeGen.ts`));
 
             // create the normal resolver file only if it does not exist
             if (!fs.existsSync(resolverPath)) {
                 await fs.createFile(resolverPath);
                 const writeStream = fs.createWriteStream(resolverPath);
-                emitter.emitQuery(writeStream, _interface);
+                emitter.emitMutation(writeStream, _interface);
                 showGenerated(resolverPath);
             }
 
@@ -45,7 +45,7 @@ export async function queriesActions(): Promise<any>  {
                 model: _interface
             };
             Object.entries((store.templates || {})).forEach(([key, value]) => {
-                if (!['model', 'models'].includes(key)) {
+                if (!['createModel', 'deleteModel', 'deleteManyModels', 'updateModel', 'updateManyModels', 'upsertModel'].includes(key)) {
                     return;
                 }
                 if (!value) {
@@ -61,7 +61,7 @@ export async function queriesActions(): Promise<any>  {
             });
             await fs.createFile(resolverCodeGenPath);
             const codeGenWriteStream = fs.createWriteStream(resolverCodeGenPath);
-            emitter.emitQueryCodeGen(codeGenWriteStream, _interface, codegen);
+            emitter.emitMutationCodeGen(codeGenWriteStream, _interface, codegen);
             showGenerated(resolverCodeGenPath);
         });
 
