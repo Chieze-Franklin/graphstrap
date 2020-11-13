@@ -75,7 +75,7 @@ export default class Emitter {
         if (deleteModelCodeToInsert) {
             deleteModelCodeToInsert.split('\n').forEach(line => properties.push(`  ${line}`));
         }
-        properties.push(`}`);
+        properties.push(`},`);
 
         properties.push(`async deleteMany${pascalCasedName}s(root, args, ctx, info) {`);
         const deleteManyModelsCodeToInsert: string = codegen.deleteManyModels;
@@ -89,7 +89,7 @@ export default class Emitter {
         if (updateModelCodeToInsert) {
             updateModelCodeToInsert.split('\n').forEach(line => properties.push(`  ${line}`));
         }
-        properties.push(`}`);
+        properties.push(`},`);
 
         properties.push(`async updateMany${pascalCasedName}s(root, args, ctx, info) {`);
         const updateManyModelsCodeToInsert: string = codegen.updateManyModels;
