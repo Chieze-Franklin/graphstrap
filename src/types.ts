@@ -17,6 +17,16 @@ export interface Config {
                     models: string;
                 }
             }
+            mutations: {
+                templates: {
+                    createModel: string;
+                    deleteModel: string;
+                    deleteManyModels: string;
+                    updateModel: string;
+                    updateManyModels: string;
+                    upsertModel: string;
+                }
+            }
         }
     }
 }
@@ -35,5 +45,11 @@ export interface Store {
     templates?: {
         model?: string;
         models?: string;
+        createModel?: string;
+        deleteModel?: string;
+        deleteManyModels?: string;
+        updateModel?: string;
+        updateManyModels?: string;
+        upsertModel?: string;
     }
 }

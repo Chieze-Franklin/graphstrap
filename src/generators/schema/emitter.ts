@@ -148,6 +148,7 @@ export default class Emitter {
                 type: 'property',
                 name: '_placeholder',
                 signature: { type: 'boolean' },
+                optional: true,
             });
         }
     
@@ -280,6 +281,7 @@ export default class Emitter {
                 type: 'property',
                 name: '_placeholder',
                 signature: { type: 'boolean' },
+                optional: true,
             });
         }
     
@@ -360,6 +362,7 @@ export default class Emitter {
                 type: 'property',
                 name: '_placeholder',
                 signature: { type: 'boolean' },
+                optional: true,
             });
         }
     
@@ -407,6 +410,7 @@ export default class Emitter {
                 type: 'property',
                 name: '_placeholder',
                 signature: { type: 'boolean' },
+                optional: true,
             });
         }
     
@@ -478,6 +482,7 @@ export default class Emitter {
                 type: 'property',
                 name: '_placeholder',
                 signature: { type: 'boolean' },
+                optional: true,
             });
         }
     
@@ -545,6 +550,7 @@ export default class Emitter {
                 type: 'property',
                 name: '_placeholder',
                 signature: { type: 'boolean' },
+                optional: true,
             });
         }
     

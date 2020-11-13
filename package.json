@@ -1,6 +1,6 @@
 {
   "name": "graphql-bootstrap",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "CLI tool to convert TypeScript types to TypeScript GraphQL resolvers",
   "main": "./lib/index.js",
   "scripts": {
