@@ -1,4 +1,4 @@
-export * from './mutations.action'
+export * from './mutations.action';
 export * from './queries.action';
 export * from './resolvers.actions';
 export * from './root.action';
