@@ -8,14 +8,22 @@ export async function rootActions(): Promise<any>  {
     if (store.resolversRootDir && store.concreteInterfaceNames) {
         showInfo('Generating root resolvers...');
 
-        const interfaces = store.concreteInterfaceNames;
         const rootPath = path.resolve(path.join(store.resolversRootDir, `index.ts`));
+        const rootPathCodeGen = path.resolve(path.join(store.resolversRootDir, `codegen.ts`));
         const emitter = new Emitter();
 
-        await fs.createFile(rootPath)
-        const rootWriteStream = fs.createWriteStream(rootPath);
-        emitter.emitRoot(rootWriteStream);
-        showGenerated(rootPath);
+        // create the normal index file only if it does not exist
+        if (!fs.existsSync(rootPath)) {
+            await fs.createFile(rootPath);
+            const writeStream = fs.createWriteStream(rootPath);
+            emitter.emitRoot(writeStream);
+            showGenerated(rootPath);
+        }
+
+        await fs.createFile(rootPathCodeGen)
+        const codeGenWriteStream = fs.createWriteStream(rootPathCodeGen);
+        emitter.emitRootCodeGen(codeGenWriteStream);
+        showGenerated(rootPathCodeGen);
 
         return;
     }
