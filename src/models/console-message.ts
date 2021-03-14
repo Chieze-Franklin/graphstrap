@@ -1,5 +1,5 @@
 export enum ConsoleMessage {
-    TITLE = 'graphql-bootstrap',
+    TITLE = 'graphstrap',
     BANNER = 'Generate TypeScript GraphQL resolvers from TypeScript declarations',
     CREATE = 'CREATE: ',
     ERROR = 'ERROR: ',

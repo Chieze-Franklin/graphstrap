@@ -15,25 +15,25 @@ export default class Collector {
   types: types.TypeMap = {
     Date: {type: 'alias', target: {type: 'string'}},
     DateTime: {type: 'alias', target: {type: 'string'}},
-    Error: {
-      type: 'interface',
-      concrete: true,
-      inherits: [],
-      members: [{
-        type: 'property',
-        name: 'name',
-        signature: {type: 'string'}
-      }, {
-        type: 'property',
-        name: 'message',
-        signature: {type: 'string'}
-      }, {
-        type: 'property',
-        name: 'stack',
-        optional: true,
-        signature: {type: 'string'}
-      }]
-    },
+    // Error: {
+    //   type: 'interface',
+    //   concrete: true,
+    //   inherits: [],
+    //   members: [{
+    //     type: 'property',
+    //     name: 'name',
+    //     signature: {type: 'string'}
+    //   }, {
+    //     type: 'property',
+    //     name: 'message',
+    //     signature: {type: 'string'}
+    //   }, {
+    //     type: 'property',
+    //     name: 'stack',
+    //     optional: true,
+    //     signature: {type: 'string'}
+    //   }]
+    // },
     Long: {type: 'alias', target: {type: 'string'}},
   };
   private checker: typescript.TypeChecker;

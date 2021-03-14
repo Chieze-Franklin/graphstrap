@@ -12,7 +12,7 @@ export async function resolversActions(): Promise<any>  {
 
         const files = store.inFiles || [];
         const promises = files.map(async file => {
-            if (util.foundSchema(file)) {
+            if (util.foundManifest(file)) {
                 // const fileName = path.basename(file, '.ts');
                 const resolversPath = path.resolve(path.join(store.resolversRootDir!, `resolvers.ts`));
 

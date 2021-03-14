@@ -16,8 +16,7 @@ export async function schemaActions(): Promise<any>  {
         files.forEach(async file => {
             showReading(file);
 
-            if (util.foundSchema(file)) {
-                // const fileName = path.basename(file, '.ts');
+            if (util.foundManifest(file)) {
                 const outputFilePath = path.resolve(path.join(store.schemaOutDir!, `schema.graphql`));
 
                 await fs.createFile(outputFilePath)

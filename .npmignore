@@ -2,14 +2,21 @@
 !lib/**
 
 # Unrelevant files
-src/**
+.editorconfig
 .gitignore
 .github/
+.nvmrc
 .nyc_output
 .vscode/
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
+generated/**
+graphstrap.json
+models/**
 package-lock.json
+src/**
+templates/**
+todo
 tsconfig.json
 tslint.json
 community-score.png
