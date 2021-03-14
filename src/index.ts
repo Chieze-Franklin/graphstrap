@@ -1,7 +1,7 @@
-import { graphqlBootstrap } from './graphql-bootstrap';
+import { graphstrap } from './graphstrap';
 
 export function index(): Promise<any> {
-  return graphqlBootstrap();
+  return graphstrap();
 };
 
 index();

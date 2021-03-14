@@ -5,11 +5,11 @@ import { showTitleAndBanner, showError } from './utils/logger.util';
 import { store } from './store';
 import { Config } from './types';
 
-export async function graphqlBootstrap(): Promise<any> {
+export async function graphstrap(): Promise<any> {
     showTitleAndBanner();
 
-    // check if graphql-bootstrap.json exists
-    const configFileName = 'graphql-bootstrap.json';
+    // check if graphstrap.json exists
+    const configFileName = 'graphstrap.json';
     const configFilePath = path.join(process.cwd(), configFileName);
 
     let configFile: Config;

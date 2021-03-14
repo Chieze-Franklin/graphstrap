@@ -1,5 +1,5 @@
-import * as _ from 'lodash';
-import * as typescript from 'typescript';
+import _ from 'lodash';
+import typescript from 'typescript';
 import * as path from 'path';
 
 import * as types from '../types';
@@ -23,7 +23,7 @@ export function load(schemaRootPath: string, rootNodeNames: string[]): types.Typ
       interfaces[interfaceNode.name.text] = interfaceNode;
 
       const documentation = util.documentationForNode(interfaceNode, (schemaRoot as typescript.SourceFile).text);
-      if (documentation && _.find(documentation.tags, {title: 'graphql', description: 'schema'})) {
+      if (documentation && _.find(documentation.tags, {title: 'graphql', description: 'manifest'})) {
         rootNodeNames.push(interfaceNode.name.text);
       }
     }
@@ -53,10 +53,10 @@ export function load(schemaRootPath: string, rootNodeNames: string[]): types.Typ
 }
 
 export function emit(
-  schemaRootPath:string,
-  rootNodeNames:string[],
-  stream:NodeJS.WritableStream = process.stdout,
-):void {
+  schemaRootPath: string,
+  rootNodeNames: string[],
+  stream: NodeJS.WritableStream = process.stdout,
+): void {
   const loadedTypes = load(schemaRootPath, rootNodeNames);
   const emitter = new Emitter(loadedTypes);
   emitter.emitAll(stream);

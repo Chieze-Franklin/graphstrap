@@ -15,25 +15,25 @@ export function documentationForNode(node: typescript.Node, source?: string): do
     return doctrine.parse(comment, {unwrap: true});
 }
 
-export function foundSchema(schemaRootPath: string): boolean {
+export function foundManifest(schemaRootPath: string): boolean {
     schemaRootPath = path.resolve(schemaRootPath);
     const program = typescript.createProgram([schemaRootPath], {});
     const schemaRoot = program.getSourceFile(schemaRootPath);
-    let foundSchema = false;
+    let foundManifest = false;
   
     typescript.forEachChild((schemaRoot as typescript.Node), (node) => {
-      if (foundSchema) return;
+      if (foundManifest) return;
       if (!isNodeExported(node)) return;
       if (node.kind === typescript.SyntaxKind.InterfaceDeclaration) {
         const interfaceNode = <typescript.InterfaceDeclaration>node;
         const documentation = documentationForNode(interfaceNode, (schemaRoot as typescript.SourceFile).text);
-        if (documentation && _.find(documentation.tags, {title: 'graphql', description: 'schema'})) {
-          foundSchema = true;
+        if (documentation && _.find(documentation.tags, {title: 'graphql', description: 'manifest'})) {
+          foundManifest = true;
         }
       }
     });
   
-    return foundSchema;
+    return foundManifest;
 }
 
 export function isNodeExported(node:typescript.Node):boolean {

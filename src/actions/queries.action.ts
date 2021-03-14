@@ -21,7 +21,7 @@ export async function queriesActions(): Promise<any>  {
             showGenerated(rootQueryPath);
         }
 
-        await fs.createFile(rootQueryCodeGenPath)
+        await fs.createFile(rootQueryCodeGenPath);
         const rootQueryCodeGenWriteStream = fs.createWriteStream(rootQueryCodeGenPath);
         emitter.emitRootQueryCodeGen(rootQueryCodeGenWriteStream, interfaces);
         showGenerated(rootQueryCodeGenPath);

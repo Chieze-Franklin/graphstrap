@@ -104,4 +104,6 @@ dist
 /models/
 /generated/
 /templates/
-graphql-bootstrap.json
+graphstrap.json
+
+todo
