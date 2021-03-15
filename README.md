@@ -72,8 +72,10 @@ Let's create some models losely based on the popular Microsoft Northwind databas
 
 We will have the following models:
 
-- Employee
 - Customer
+- Product
+- Order
+- Supplier
 
 Each model will have an identifier called `id`. To avoid repeating this in every model, we will create
 this in a base interface called `Identifiable`.
@@ -109,16 +111,14 @@ Now, we create our models.
 import { Identifiable } from "./id";
 import { TimeStamped } from "./timestamp";
 
-// Type aliases become 'GraphQL' scalars
+// Type aliases become 'GraphQL' scalars.
 export type Url = string;
 
-export interface Employee extends Identifiable, TimeStamped {
-  lastName: string;
-  firstName: string;
-  title?: string;
-  birthDate?: Date;
-  hireDate?: Date;
-  address?: string;
+export enum Region {
+  East,
+  North,
+  South,
+  West
 }
 
 export interface Customer extends Identifiable, TimeStamped {
@@ -127,6 +127,32 @@ export interface Customer extends Identifiable, TimeStamped {
   contactTitle?: string;
   address?: string;
   phone?: string;
+  region?: Region;
+}
+
+export interface Product extends Identifiable, TimeStamped {
+  name: string;
+  quantityPerUnit: number;
+  unitPrice: number;
+  unitsInStock: number;
+}
+
+export interface Order extends Identifiable, TimeStamped {
+  customer: Customer;
+  product: Product;
+  orderDate: Date;
+  requiredDate?: Date;
+  shippedDate?: Date;
+  shipRegion?: Region;
+}
+
+export interface Supplier extends Identifiable, TimeStamped {
+  companyName: string;
+  contactName?: string;
+  address: string;
+  region?: Region;
+  phone?: string;
+  homePage?: Url;
 }
 ```
 
@@ -145,8 +171,10 @@ import { Employee, Customer } from './models';
 
 /** @graphql manifest */
 export interface Manifest {
-  employee: Employee;
   customer: Customer;
+  product: Product;
+  order: Order;
+  supplier: Supplier;
 }
 ```
 
@@ -165,6 +193,88 @@ To run the graphstrap instance installed for a project, in the project's root di
 ./node_modules/graphstrap/bin/graphstrap
 ```
 
+The processed and output files should be printed on the terminal.
+
+![code4](https://user-images.githubusercontent.com/6097630/111146064-4df75280-8589-11eb-87b4-d5fef03dcda9.png)
+
+##### Generated Schema
+
+graphstrap will generate a `schema.graphql` file in the schema output directory specified in the `graphstrap.config` file.
+Below are the generated queries and mutations from the models specified above.
+
+```gql
+type Query {
+  customer(id: ID!): Customer!
+  customers(where: CustomerWhereInput, orderBy: CustomerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Customer!]!
+  product(id: ID!): Product!
+  products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product!]!
+  order(id: ID!): Order!
+  orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]!
+  supplier(id: ID!): Supplier!
+  suppliers(where: SupplierWhereInput, orderBy: SupplierOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Supplier!]!
+}
+type Mutation {
+  createCustomer(data: CustomerCreateInput!): Customer!
+  deleteCustomer(id: ID!): Customer!
+  deleteManyCustomers(where: CustomerWhereInput): [Customer!]!
+  updateCustomer(id: ID!, data: CustomerUpdateInput!): Customer
+  updateManyCustomers(data: CustomerUpdateManyMutationInput!, where: CustomerWhereInput): [Customer!]!
+  upsertCustomer(id: ID!, create: CustomerCreateInput!, update: CustomerUpdateInput!): Customer!
+  createProduct(data: ProductCreateInput!): Product!
+  deleteProduct(id: ID!): Product!
+  deleteManyProducts(where: ProductWhereInput): [Product!]!
+  updateProduct(id: ID!, data: ProductUpdateInput!): Product
+  updateManyProducts(data: ProductUpdateManyMutationInput!, where: ProductWhereInput): [Product!]!
+  upsertProduct(id: ID!, create: ProductCreateInput!, update: ProductUpdateInput!): Product!
+  createOrder(data: OrderCreateInput!): Order!
+  deleteOrder(id: ID!): Order!
+  deleteManyOrders(where: OrderWhereInput): [Order!]!
+  updateOrder(id: ID!, data: OrderUpdateInput!): Order
+  updateManyOrders(data: OrderUpdateManyMutationInput!, where: OrderWhereInput): [Order!]!
+  upsertOrder(id: ID!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
+  createSupplier(data: SupplierCreateInput!): Supplier!
+  deleteSupplier(id: ID!): Supplier!
+  deleteManySuppliers(where: SupplierWhereInput): [Supplier!]!
+  updateSupplier(id: ID!, data: SupplierUpdateInput!): Supplier
+  updateManySuppliers(data: SupplierUpdateManyMutationInput!, where: SupplierWhereInput): [Supplier!]!
+  upsertSupplier(id: ID!, create: SupplierCreateInput!, update: SupplierUpdateInput!): Supplier!
+}
+```
+
+Not only does graphstrap generate the root queries and mutations, it also generates the appropriate input types,
+including input types for filtering and ordering.
+Below is the ordering input (`CustomerOrderByInput`) for the `Customer` model.
+
+```gql
+enum CustomerOrderByInput {
+  address_ASC
+  address_DESC
+  companyName_ASC
+  companyName_DESC
+  contactName_ASC
+  contactName_DESC
+  contactTitle_ASC
+  contactTitle_DESC
+  createdAt_ASC
+  createdAt_DESC
+  id_ASC
+  id_DESC
+  phone_ASC
+  phone_DESC
+  region_ASC
+  region_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+```
+
+##### Generated Resolvers
+
+### Making Changes
+
+##### files that should not be edited
+##### files that can be edited... delete to force regeneration
+
 ### Decorations
 
 ##### /** @graphql manifest */
@@ -174,3 +284,7 @@ To run the graphstrap instance installed for a project, in the project's root di
 ##### /** @graphql directive */
 
 ### Templates
+
+### Custom Schema
+
+##### Object Resolvers

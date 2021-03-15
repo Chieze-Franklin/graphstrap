@@ -11,6 +11,8 @@ export default class Emitter {
     renames: {[key: string]: string} = {};
     enumNames: string[] = [];
     scalarNames: string[] = [];
+    querySchema: string[] = [];
+    mutationSchema: string[] = [];
 
     constructor(private types: Types.TypeMap) {
         this.types = <Types.TypeMap>_.omitBy(types, (node, name) => this._preprocessNode(node, name!));
@@ -21,6 +23,12 @@ export default class Emitter {
 
         stream.write('\n');
         _.each(this.types, (node, name) => this.emitTopLevelNode(node, name!, stream));
+
+        const query = `type Query {\n${this._indent(this.querySchema)}\n}`;
+        stream.write(`\n${query}`);
+
+        const mutation = `type Mutation {\n${this._indent(this.mutationSchema)}\n}`;
+        stream.write(`\n${mutation}`);
     }
 
     emitTopLevelNode(node: Types.Node, name: Types.SymbolName, stream: NodeJS.WritableStream) {
@@ -236,10 +244,10 @@ export default class Emitter {
                 result = `${result}\n\n${this._emitInterfaceWhereUniqueInput(node, name)}`;
 
                 // query extension
-                result = `${result}\n\n${this._emitQueryExtension(node, name)}`;
+                this._emitQueryExtension(node, name);
 
                 // mutation extension
-                result = `${result}\n\n${this._emitMutationExtension(node, name)}`;
+                this._emitMutationExtension(node, name);
             }
 
             return result;
@@ -666,7 +674,7 @@ export default class Emitter {
         return `input ${name}WhereUniqueInput {\n${this._indent(properties.flat())}\n}`;
     }
 
-    _emitMutationExtension(node: Types.InterfaceNode, name: Types.SymbolName): string {
+    _emitMutationExtension(node: Types.InterfaceNode, name: Types.SymbolName) {
         const pascalCasedName = name.charAt(0).toUpperCase() + name.substr(1);
  
         const createMutation = `create${pascalCasedName}(data: ${name}CreateInput!): ${name}!`;
@@ -685,10 +693,10 @@ export default class Emitter {
             upsertMutation
         ];
 
-        return `extend type Mutation {\n${this._indent(properties)}\n}`;
+        this.mutationSchema.push(...properties);
     }
 
-    _emitQueryExtension(node: Types.InterfaceNode, name: Types.SymbolName): string {
+    _emitQueryExtension(node: Types.InterfaceNode, name: Types.SymbolName) {
         const camelCasedName = name.charAt(0).toLowerCase() + name.substr(1);
 
         const singularQuery = `${camelCasedName}(id: ID!): ${name}!`;
@@ -701,7 +709,7 @@ export default class Emitter {
             pluralQuery
         ];
 
-        return `extend type Query {\n${this._indent(properties)}\n}`;
+        this.querySchema.push(...properties);
     }
 
     _emitUnion(node: Types.UnionNode, name: Types.SymbolName): string {
