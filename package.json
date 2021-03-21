@@ -1,6 +1,6 @@
 {
   "name": "graphstrap",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "graphstrap allows you to bootstrap a GraphQL server by converting TypeScript types to GraphQL schema and their TypeScript resolvers",
   "main": "./lib/index.js",
   "scripts": {
