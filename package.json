@@ -1,6 +1,6 @@
 {
   "name": "graphstrap",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "graphstrap allows you to bootstrap a GraphQL server by converting TypeScript types to GraphQL schema and their TypeScript resolvers",
   "main": "./lib/index.js",
   "scripts": {
@@ -38,7 +38,7 @@
     "inquirer": "^7.3.3",
     "kleur": "^4.1.3",
     "lodash": "^4.17.20",
-    "silverb": "0.0.7",
+    "syntax-error": "^1.4.0",
     "tslib": "^2.0.3"
   },
   "devDependencies": {
@@ -54,6 +54,7 @@
     "@types/sinon": "^9.0.8",
     "@types/sinon-chai": "^3.2.5",
     "chai": "^4.2.0",
+    "jest": "^26.4.2",
     "mocha": "^8.2.1",
     "mocha-junit-reporter": "^2.0.0",
     "nyc": "^15.1.0",
