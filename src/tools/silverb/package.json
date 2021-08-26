@@ -1,0 +1,59 @@
+{
+  "_from": "silverb",
+  "_id": "silverb@0.0.7",
+  "_inBundle": false,
+  "_integrity": "sha512-OpwLWtyOM/taQlL0urZGAjvMc/4XK9UOiOn9zQb3mWeLQvgl4dm9Mdml32fHM+bhkNzL4PEsMP2RgVnjFg8sRQ==",
+  "_location": "/silverb",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "silverb",
+    "name": "silverb",
+    "escapedName": "silverb",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/silverb/-/silverb-0.0.7.tgz",
+  "_shasum": "b59c1e827128423230b0b30a9b328be6b674e279",
+  "_spec": "silverb",
+  "_where": "/home/franklin/Documents/Projects/graphql-tsgen",
+  "author": {
+    "name": "Tiago Silva Pereira Rodrigues"
+  },
+  "bugs": {
+    "url": "https://github.com/pwc-code-generator/silverb-template-engine/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "syntax-error": "^1.4.0"
+  },
+  "deprecated": false,
+  "description": "SilverB Code and Text Template Engine",
+  "devDependencies": {
+    "jest": "^26.4.2"
+  },
+  "homepage": "https://github.com/pwc-code-generator/silverb-template-engine#readme",
+  "keywords": [
+    "template",
+    "engine",
+    "code",
+    "text"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "silverb",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pwc-code-generator/silverb-template-engine.git"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "version": "0.0.7"
+}

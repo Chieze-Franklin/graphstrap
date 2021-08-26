@@ -3,7 +3,7 @@ import path from 'path';
 import { showError, showGenerated, showInfo } from '../utils/logger.util';
 import { store } from '../store';
 import Emitter from '../generators/real-resolvers/emitter';
-import SilverB from 'silverb';
+import SilverB from '../tools/silverb';
 
 export async function mutationsActions(): Promise<any>  {
     if (store.resolversRootDir && store.concreteInterfaceNames) {
